@@ -33,6 +33,9 @@ app.use((req, res, next) => {
 app.use(logger);
 
 //Routes
+const authRoutes = require('./routes/auth.route');
+
+app.use('/api/auth', authRoutes);
 
 //Not found route 404
 app.use((req, res) => {
