@@ -2,7 +2,15 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     logger = require('./middlewares/api.request.logger.middleware'),
     cors = require('cors'),
-    helmet = require('helmet');
+    helmet = require('helmet'),
+    rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 100,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false
+});
 
 const app = express();
 
@@ -12,6 +20,7 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }));
 app.use(helmet());
+app.use(limiter);
 
 //Rules 
 app.use((req, res, next) => {
