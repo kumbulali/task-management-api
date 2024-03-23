@@ -1,5 +1,6 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
+    logger = require('./middlewares/api.request.logger.middleware'),
     cors = require('cors'),
     helmet = require('helmet');
 
@@ -27,6 +28,9 @@ app.use((req, res, next) => {
 
     next();
 });
+
+// API Request Logger
+app.use(logger);
 
 //Routes
 
