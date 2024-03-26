@@ -3,7 +3,8 @@ const express = require('express'),
     logger = require('./middlewares/api.request.logger.middleware'),
     cors = require('cors'),
     helmet = require('helmet'),
-    rateLimit = require('express-rate-limit');
+    rateLimit = require('express-rate-limit'),
+    errorHandler = require('./utils/error.handler.util');
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -45,6 +46,9 @@ app.use(logger);
 const authRoutes = require('./routes/auth.route');
 
 app.use('/api/auth', authRoutes);
+
+//Error handler
+app.use(errorHandler);
 
 //Not found route 404
 app.use((req, res) => {
