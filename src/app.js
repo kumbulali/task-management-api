@@ -43,9 +43,11 @@ app.use((req, res, next) => {
 app.use(logger);
 
 //Routes
-const authRoutes = require('./routes/auth.route');
+const authRoutes = require('./routes/auth.route'),
+    taskRoutes = require('./routes/task.route');
 
 app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
 
 //Error handler
 app.use(errorHandler);
