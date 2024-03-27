@@ -1,19 +1,25 @@
-module.exports.register = async (req, res) => {
+const UserService = require('../services/user.service');
+
+module.exports.register = async (req, res, next) => {
     try {
-        res.send('Register');
+        const email = req.body.email,
+            password = req.body.password;
+        const createdUser = await UserService.registerUser(email, password);
+        
+        res.send(createdUser);
     } catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
+        next(err);
     }
 };
 
-module.exports.login = async (req, res) => {
+module.exports.login = async (req, res, next) => {
     try {
-        res.send('Login');
+        const email = req.body.email,
+            password = req.body.password;
+        const loggedInUser = await UserService.loginUser(email, password);
+
+        res.send(loggedInUser);
     } catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
+        next(err);
     }
 };
