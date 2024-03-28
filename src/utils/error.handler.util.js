@@ -1,3 +1,4 @@
+const { validation_error } = require("../config/error.messages.config");
 const CustomError = require("./custom.error");
 
 const errorHandler = (err, req, res, next) => {
@@ -13,13 +14,11 @@ const errorHandler = (err, req, res, next) => {
 
   // Handle specific known errors
   if (err.name === 'ValidationError') {
-    statusCode = 400;
-    errorJSON.message = 'Validation error';
+    err = validation_error;
   } else if (err.name === 'MongoServerError' && err.code === 11000) {
     statusCode = 400;
     errorJSON.message = 'Duplicate key error';
   } else if (err instanceof CustomError) {
-    errorJSON.message = err.message;
     if(err.statusCode)
       statusCode = err.statusCode;
     if(err.name)
