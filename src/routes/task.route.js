@@ -9,6 +9,10 @@ taskRouter.post('/', checkJwt, validateCreateTask, taskController.createTask);
 
 taskRouter.get('/:taskId', checkJwt, validateTaskID, taskController.getSingleTaskByID);
 
+taskRouter.get('/', checkJwt, taskController.getAllTasks);
+
 taskRouter.patch('/:taskId', checkJwt, validateUpdateTask, taskController.updateTask);
+
+taskRouter.delete('/:taskId', checkJwt, validateTaskID, taskController.deleteTask);
 
 module.exports = taskRouter;
