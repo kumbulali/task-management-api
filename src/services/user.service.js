@@ -16,6 +16,8 @@ module.exports.registerUser = async function (email, password) {
 
 module.exports.loginUser = async function(email, password){
     var foundUser = await User.findOne({email: email});
+    if(!foundUser)
+        throw invalid_credentials;
     if(foundUser.authenticate(password)){
         foundUser = removeCredentials(foundUser);
         foundUser.authToken = await signJwt({userId: foundUser._id, email: foundUser.email});
