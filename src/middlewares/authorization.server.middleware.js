@@ -4,7 +4,7 @@ const _ = require('lodash'),
 module.exports.checkJwt = async (req, res, next) => {
     try {
         const jwtPayload = jwtUtil.getPayloadFromReq(req);
-        res.locals.jwtPayload = jwtPayload;
+        req.user = jwtPayload;
         next();
     } catch (error) {
         res.status(401).json({

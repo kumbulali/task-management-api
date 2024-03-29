@@ -10,7 +10,7 @@ function removeCredentials(userObject) {
 module.exports.registerUser = async function (email, password) {
     var createdUser = await User.create({ email: email, password: password });
     createdUser = removeCredentials(createdUser);
-    createdUser.authToken = await signJwt({ userId: createdUser._id, email: createdUser.email });
+    createdUser.authToken = signJwt({ userId: createdUser._id, email: createdUser.email });
     return createdUser;
 };
 
@@ -20,7 +20,7 @@ module.exports.loginUser = async function(email, password){
         throw invalid_credentials;
     if(foundUser.authenticate(password)){
         foundUser = removeCredentials(foundUser);
-        foundUser.authToken = await signJwt({userId: foundUser._id, email: foundUser.email});
+        foundUser.authToken = signJwt({userId: foundUser._id, email: foundUser.email});
         return foundUser;
     }
     else{
