@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken'),
     config = require('../config/environment.variables.config');
 
-module.exports.signJwt = async (payload) => {
+module.exports.signJwt = (payload) => {
     const token = jwt.sign(payload,
         config.jwtSecret,
         { expiresIn: "1h" })
