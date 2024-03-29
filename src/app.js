@@ -4,7 +4,11 @@ const express = require('express'),
     cors = require('cors'),
     helmet = require('helmet'),
     rateLimit = require('express-rate-limit'),
-    errorHandler = require('./utils/error.handler.util');
+    errorHandler = require('./utils/error.handler.util'),
+    passport = require('passport'),
+    session = require('express-session'),
+    { sessionSecret } = require('./config/environment.variables.config'),
+    { useGoogleStrategy } = require('./config/passport');
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -14,6 +18,16 @@ const limiter = rateLimit({
 });
 
 const app = express();
+
+app.use(session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
+
+useGoogleStrategy();
+app.use(passport.initialize());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

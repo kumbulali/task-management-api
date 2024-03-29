@@ -1,7 +1,7 @@
 const express = require('express'),
-    mongoose = require('mongoose'),
-    app = require('./app'),
-    { server } = require('./config/environment.variables.config');
+  mongoose = require('mongoose'),
+  app = require('./app'),
+  { server } = require('./config/environment.variables.config');
 
 const PORT = server.port;
 
@@ -17,3 +17,5 @@ mongoose.connect('mongodb://localhost/mydatabase')
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
   });
+
+module.exports = app;
