@@ -7,11 +7,11 @@ module.exports.createTask = async (req, res, next) => {
             description = req.body.description,
             completed = req.body.completed,
             assigneeUserId = req.body.assignee,
-            authorUserId = res.locals.jwtPayload.userId;
+            authorUserId = req.user.userId;
 
         const createdTask = await TaskService.createTask(title, description, completed, authorUserId, assigneeUserId);
 
-        res.send(createdTask);
+        res.status(201).send(createdTask);
     } catch (err) {
         next(err);
     }
